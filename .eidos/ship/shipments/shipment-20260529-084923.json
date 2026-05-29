@@ -1,0 +1,420 @@
+{
+  "ok": true,
+  "repo": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+  "manifest": "/Users/dshanklinbv/repos-eidos-agi/linearplus/.eidos/ship/manifest.toml",
+  "shipment_style": null,
+  "agent_contract": {
+    "role": "one-shot shipment gate",
+    "invokes_subagents": false,
+    "max_repair_iterations": 0,
+    "repair_policy": "Ship observes, verifies, reports, and writes evidence. It may suggest next actions, but it must not spawn reviewers or repair agents.",
+    "loop_stop": "A caller may run ship again after separate human or agent work, but ship itself does not recurse.",
+    "agentic_first": {
+      "title": "AGENTIC-FIRST SOFTWARE-SKEPTICAL DOCTRINE",
+      "preference": "Eidos prefers agentic improvement over software production.",
+      "warning": "Do not write code merely because code is possible.",
+      "pre_code_question": "Before coding, justify why instruction, routing, proof, Converge, Felix, StepProof, or praxis is insufficient.",
+      "code_justification_categories": [
+        "evidence gate",
+        "adapter",
+        "thin CLI/plugin shim",
+        "schema/contract",
+        "specialist runtime",
+        "business/domain logic"
+      ],
+      "non_code_paths_preferred": [
+        "instruction",
+        "routing",
+        "proof",
+        "Converge",
+        "Felix",
+        "StepProof",
+        "praxis"
+      ]
+    }
+  },
+  "facets": [
+    "agentic-first",
+    "cli",
+    "codex-plugin",
+    "eidos-plugin",
+    "marketplace",
+    "python-package",
+    "stepproof",
+    "workspace"
+  ],
+  "project": {
+    "name": "linearplus",
+    "scripts": [
+      "linearplus"
+    ]
+  },
+  "do_not": [],
+  "yes": [],
+  "notes": [],
+  "gates": [
+    {
+      "id": "git-clean-pushed",
+      "facet": "workspace",
+      "status": "pass",
+      "ok": true,
+      "detail": "Clean and synced.",
+      "command": null,
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "duration_seconds": null,
+      "artifacts": [],
+      "data": {
+        "path": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+        "kind": "git",
+        "ok": true,
+        "status": "ok",
+        "branch": "main",
+        "head": "2e8a94a",
+        "upstream": "origin/main",
+        "ahead": 0,
+        "behind": 0,
+        "clean": true,
+        "modified_count": 0,
+        "untracked_count": 0,
+        "examples": [],
+        "detail": "Clean and synced."
+      }
+    },
+    {
+      "id": "agentic-first-doctrine",
+      "facet": "agentic-first",
+      "status": "pass",
+      "ok": true,
+      "detail": "Agentic-first manifest proof is present.",
+      "command": null,
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "duration_seconds": null,
+      "artifacts": [],
+      "data": {
+        "doctrine": {
+          "title": "AGENTIC-FIRST SOFTWARE-SKEPTICAL DOCTRINE",
+          "preference": "Eidos prefers agentic improvement over software production.",
+          "warning": "Do not write code merely because code is possible.",
+          "pre_code_question": "Before coding, justify why instruction, routing, proof, Converge, Felix, StepProof, or praxis is insufficient.",
+          "code_justification_categories": [
+            "evidence gate",
+            "adapter",
+            "thin CLI/plugin shim",
+            "schema/contract",
+            "specialist runtime",
+            "business/domain logic"
+          ],
+          "non_code_paths_preferred": [
+            "instruction",
+            "routing",
+            "proof",
+            "Converge",
+            "Felix",
+            "StepProof",
+            "praxis"
+          ]
+        },
+        "code_bearing": true,
+        "manifest": {
+          "code_justification": "thin CLI/plugin shim",
+          "agentic_capability": "LinearPlus gives Eidos and Codex a token-safe CLI bridge for Linear initiative creation and project attachment when connector tools are missing or unreliable.",
+          "non_code_paths_considered": [
+            "instruction",
+            "routing",
+            "proof",
+            "existing Linear connector"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pre-clean-artifact-scan",
+      "facet": "workspace",
+      "status": "pass",
+      "ok": true,
+      "detail": "Generated artifacts were found before shipment and cleaned before gates ran.",
+      "command": null,
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "duration_seconds": null,
+      "artifacts": [
+        "linearplus/__pycache__",
+        "tests/__pycache__"
+      ],
+      "data": {}
+    },
+    {
+      "id": "python-tests",
+      "facet": "python-package",
+      "status": "pass",
+      "ok": true,
+      "detail": "Python test suite passed.",
+      "command": [
+        "uv",
+        "run",
+        "--extra",
+        "dev",
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "..........                                                               [100%]\n10 passed in 0.07s",
+      "stderr_tail": "Building linearplus @ file:///Users/dshanklinbv/repos-eidos-agi/linearplus\n      Built linearplus @ file:///Users/dshanklinbv/repos-eidos-agi/linearplus\nInstalled 6 packages in 73ms",
+      "duration_seconds": 0.985,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "python-build",
+      "facet": "python-package",
+      "status": "pass",
+      "ok": true,
+      "detail": "Wheel and source distribution build completed.",
+      "command": [
+        "uv",
+        "build"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "",
+      "stderr_tail": "Building source distribution...\nBuilding wheel from source distribution...\nSuccessfully built dist/linearplus-0.1.0.tar.gz\nSuccessfully built dist/linearplus-0.1.0-py3-none-any.whl",
+      "duration_seconds": 0.751,
+      "artifacts": [
+        "dist/.gitignore",
+        "dist/linearplus-0.1.0-py3-none-any.whl",
+        "dist/linearplus-0.1.0.tar.gz"
+      ],
+      "data": {}
+    },
+    {
+      "id": "twine-check",
+      "facet": "python-package",
+      "status": "pass",
+      "ok": true,
+      "detail": "Distribution metadata passed twine check.",
+      "command": [
+        "uvx",
+        "twine",
+        "check",
+        "dist/*"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "Checking dist/linearplus-0.1.0-py3-none-any.whl: PASSED\nChecking dist/linearplus-0.1.0.tar.gz: PASSED",
+      "stderr_tail": "",
+      "duration_seconds": 0.548,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "wheel-install",
+      "facet": "python-package",
+      "status": "pass",
+      "ok": true,
+      "detail": "Installed package runtime version matches metadata.",
+      "command": [
+        "/var/folders/x_/j3nb_xdn5pq2845d4xsd_rn80000gn/T/eidos-ship-wheel-w0i0gzk8/bin/python",
+        "-m",
+        "pip",
+        "install",
+        "--no-cache-dir",
+        "--quiet",
+        "/Users/dshanklinbv/repos-eidos-agi/linearplus/dist/linearplus-0.1.0-py3-none-any.whl",
+        "&&",
+        "/var/folders/x_/j3nb_xdn5pq2845d4xsd_rn80000gn/T/eidos-ship-wheel-w0i0gzk8/bin/python",
+        "-c",
+        "<metadata/runtime version check>"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "metadata=0.1.0 runtime=0.1.0",
+      "stderr_tail": "[notice] A new release of pip is available: 24.2 -> 26.1.1\n[notice] To update, run: /var/folders/x_/j3nb_xdn5pq2845d4xsd_rn80000gn/T/eidos-ship-wheel-w0i0gzk8/bin/python -m pip install --upgrade pip",
+      "duration_seconds": 0.978,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "entrypoint-linearplus-help",
+      "facet": "cli",
+      "status": "pass",
+      "ok": true,
+      "detail": "linearplus --help responds.",
+      "command": [
+        "linearplus",
+        "--help"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "usage: linearplus [-h] [--token-env TOKEN_ENV] [--endpoint ENDPOINT]\n                  {initiative-create,initiative-ensure,initiative-get,attach-project,greenmark-bootstrap}\n                  ...\n\nCLI-first Linear GraphQL bridge for initiative workflows.\n\npositional arguments:\n  {initiative-create,initiative-ensure,initiative-get,attach-project,greenmark-bootstrap}\n    initiative-create   Create a Linear initiative.\n    initiative-ensure   Find an initiative by name or create it.\n    initiative-get      Fetch an initiative by exact name.\n    attach-project      Attach an existing Linear project to an initiative.\n    greenmark-bootstrap\n                        Create/use the Greenmark initiative and attach its\n                        project.\n\noptions:\n  -h, --help            show this help message and exit\n  --token-env TOKEN_ENV\n                        Environment variable containing the Linear API key.\n  --endpoint ENDPOINT   Linear GraphQL endpoint.",
+      "stderr_tail": "",
+      "duration_seconds": 0.357,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "codex-plugin-validator",
+      "facet": "codex-plugin",
+      "status": "pass",
+      "ok": true,
+      "detail": "Codex plugin manifest validated.",
+      "command": [
+        "python3",
+        "/Users/dshanklinbv/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py",
+        "/Users/dshanklinbv/repos-eidos-agi/linearplus"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "Plugin validation passed: /Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "stderr_tail": "",
+      "duration_seconds": 0.157,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "felix-plugin-doctor",
+      "facet": "plugin",
+      "status": "pass",
+      "ok": true,
+      "detail": "Felix plugin doctor passed.",
+      "command": [
+        "felix",
+        "plugin",
+        "doctor",
+        "/Users/dshanklinbv/repos-eidos-agi/linearplus"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": 0,
+      "stdout_tail": "Felix plugin doctor: linearplus\nsource: /Users/dshanklinbv/repos-eidos-agi/linearplus\nverdict: PASS\n\nChecks:\n- manifest: PASS \u2014 distribution metadata is present\n- runtime: PASS \u2014 no MCP server configured\n- agent-discovery: PASS \u2014 skill tool references match MCP tools\n\nMCP tools:\n- none\n\nSkill tool references:\n- none\n\nBlockers:\n- none\n\nWarnings:\n- none\n\nAgentic instruction:\n- doctor PASS/FAIL is evidence to reconcile, not a verdict to parrot\n- fix blockers in the canonical source before repairing generated installs or caches\n- do not claim plugin health until manifest, runtime, and agent-discovery checks agree",
+      "stderr_tail": "",
+      "duration_seconds": 0.237,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "marketplace-check",
+      "facet": "marketplace",
+      "status": "pass",
+      "ok": true,
+      "detail": "Marketplace bundle matches source.",
+      "command": [
+        "python3",
+        "/Users/dshanklinbv/repos-eidos-agi/eidos-marketplace/tools/marketplace_publish.py",
+        "check",
+        "linearplus",
+        "--source",
+        "/Users/dshanklinbv/repos-eidos-agi/linearplus"
+      ],
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/eidos-marketplace",
+      "exit_code": 0,
+      "stdout_tail": "linearplus: OK",
+      "stderr_tail": "",
+      "duration_seconds": 0.169,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "eidos-plugin-show",
+      "facet": "eidos-plugin",
+      "status": "pass",
+      "ok": true,
+      "detail": "Installed Eidos plugin is visible.",
+      "command": [
+        "eidos",
+        "plugin",
+        "show",
+        "linearplus"
+      ],
+      "cwd": "/var/folders/x_/j3nb_xdn5pq2845d4xsd_rn80000gn/T",
+      "exit_code": 0,
+      "stdout_tail": "=== plugin: linearplus (global) ===\npath:     /Users/dshanklinbv/.eidos/plugins/linearplus\nversion:  0.1.0\nalias:    linearplus\nverify:   yes\n\n--- plugin.yaml ---\nslug: linearplus\nalias: linearplus\nversion: 0.1.0\ndescription: Use LinearPlus for Linear GraphQL initiative creation and project attachment workflows missing from connector surfaces.\nkind: tool\nentrypoint: playbook.md\ntags:\n  - eidos\n  - tool\n  - linear\n  - graphql\n  - initiatives\n  - cli\n\n--- playbook.md (head) ---\n# LinearPlus Playbook\n\nUse LinearPlus when an Eidos/Codex workflow needs Linear initiative operations\nthat are missing or unreliable in the connected Linear tool surface.\n\n## Use When\n\n- A user explicitly asks for a Linear initiative and the connector can only\n  create projects or issues.\n- A Linear project needs to be attached to an initiative through the official\n  Linear GraphQL API.\n- Codex needs redacted evidence that a Linear initiative was created, reused, or\n  blocked by missing credentials.\n\n## Do Not Use When\n\n- The normal Linear connector already exposes the needed operation reliably.\n- The task is only issue creation or project description editing.\n- The workflow would require printing, storing, rotating, or exposing a Linear\n  API token.\n\n## Commands\n\nFrom the plugin root:\n\n```bash\nbin/linearplus --help\nbin/linearplus initiative-get --name \"Greenmark AI Search Visibility\"\nbin/linearplus initiative-ensure --name \"Greenmark AI Search Visibility\" --status Planned\nbin/linearplus attach-project --initiative-id <initiative-id> --project-id <project-id>\nbin/linearplus greenmark-bootstrap --dry-run\nbin/linearplus greenmark-bootstrap\n```\n\n## Credentials\n\nSet one of:\n\n```bash\nexport LINEAR_API_KEY=\"...\"\n... (21 more lines)",
+      "stderr_tail": "",
+      "duration_seconds": 0.672,
+      "artifacts": [],
+      "data": {}
+    },
+    {
+      "id": "eidos-plugin-run",
+      "facet": "eidos-plugin",
+      "status": "pass",
+      "ok": true,
+      "detail": "Installed Eidos plugin run path responds.",
+      "command": [
+        "eidos",
+        "plugin",
+        "run",
+        "linearplus",
+        "--json"
+      ],
+      "cwd": "/var/folders/x_/j3nb_xdn5pq2845d4xsd_rn80000gn/T",
+      "exit_code": 0,
+      "stdout_tail": "{\"ok\": true, \"plugin\": {\"slug\": \"linearplus\", \"scope\": \"global\", \"version\": \"0.1.0\"}, \"invocation_id\": \"linearplus-1780062563397\", \"work_dir\": \"/Users/dshanklinbv/.eidos/plugin_runs/linearplus-1780062563397\", \"context_json\": \"/Users/dshanklinbv/.eidos/plugin_runs/linearplus-1780062563397/context.json\", \"playbook_path\": \"/Users/dshanklinbv/.eidos/plugin_runs/linearplus-1780062563397/playbook.md\", \"draft_dir\": \"/Users/dshanklinbv/.eidos/plugin_runs/linearplus-1780062563397/draft\"}",
+      "stderr_tail": "",
+      "duration_seconds": 0.599,
+      "artifacts": [],
+      "data": {
+        "work_dir": "/Users/dshanklinbv/.eidos/plugin_runs/linearplus-1780062563397",
+        "work_dir_cleaned": true
+      }
+    },
+    {
+      "id": "stepproof-audit",
+      "facet": "stepproof",
+      "status": "skip",
+      "ok": true,
+      "detail": "No .stepproof state found.",
+      "command": null,
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "duration_seconds": null,
+      "artifacts": [],
+      "data": {
+        "path": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+        "kind": "stepproof",
+        "ok": true,
+        "status": "absent",
+        "required": false,
+        "installed": true,
+        "state_dir": null,
+        "active_run": null,
+        "runtime": null,
+        "runs_count": 0,
+        "audit": {
+          "checked": false,
+          "ok": null
+        },
+        "metrics": null,
+        "detail": "No .stepproof state found."
+      }
+    },
+    {
+      "id": "post-clean-artifact-scan",
+      "facet": "workspace",
+      "status": "pass",
+      "ok": true,
+      "detail": "No generated build/cache artifacts found in the checkout.",
+      "command": null,
+      "cwd": "/Users/dshanklinbv/repos-eidos-agi/linearplus",
+      "exit_code": null,
+      "stdout_tail": "",
+      "stderr_tail": "",
+      "duration_seconds": null,
+      "artifacts": [],
+      "data": {}
+    }
+  ]
+}
