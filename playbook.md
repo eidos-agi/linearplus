@@ -44,6 +44,34 @@ export LINEARPLUS_LINEAR_API_KEY="..."
 LinearPlus fails closed when neither variable is present. It does not prompt for
 tokens and does not write tokens to repo files.
 
+## Pairing Procedure
+
+Use pairing when LinearPlus needs a live Linear API key. Do not turn this into
+OAuth, browser automation, or plugin-managed token storage unless Daniel
+explicitly asks for that implementation.
+
+1. Run the relevant dry-run command first and explain the intended live change.
+2. Have Daniel create or select a Linear personal API key in
+   `Settings > Account > Security & Access`.
+3. If key creation is unavailable, have a Linear admin check
+   `Settings > Administration > API > Member API keys`.
+4. Have Daniel provide the key through an approved local secret path or shell
+   environment, not chat.
+5. Verify only that a key exists:
+
+   ```bash
+   test -n "$LINEARPLUS_LINEAR_API_KEY" || test -n "$LINEAR_API_KEY"
+   ```
+
+6. Run the narrow LinearPlus command Daniel approved.
+7. Record redacted evidence: command, created or reused ids/urls, and any
+   permission blocker. Never record the token.
+
+Official Linear references:
+
+- `https://linear.app/docs/api-and-webhooks`
+- `https://linear.app/developers/graphql`
+
 ## Evidence
 
 For Eidos loops, capture:
