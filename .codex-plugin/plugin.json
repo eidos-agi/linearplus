@@ -1,0 +1,46 @@
+{
+  "name": "linearplus",
+  "version": "0.1.0",
+  "description": "Use the LinearPlus CLI for Linear GraphQL initiative workflows missing from connector surfaces.",
+  "author": {
+    "name": "Eidos AGI",
+    "email": "daniel@eidosagi.com",
+    "url": "https://github.com/eidos-agi"
+  },
+  "homepage": "https://github.com/eidos-agi/linearplus",
+  "repository": "https://github.com/eidos-agi/linearplus",
+  "license": "MIT",
+  "keywords": [
+    "linear",
+    "graphql",
+    "initiatives",
+    "projects",
+    "cli",
+    "eidos-agi"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "LinearPlus",
+    "shortDescription": "Create and attach Linear initiatives through a CLI-first API bridge.",
+    "longDescription": "LinearPlus routes Codex to a small token-safe CLI for Linear GraphQL operations that are missing or unreliable in connector surfaces. The first workflow creates or reuses initiatives, attaches existing projects, and emits redacted evidence for Eidos loops.",
+    "developerName": "Eidos AGI",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Linear GraphQL",
+      "Initiative creation",
+      "Project attachment",
+      "Duplicate avoidance",
+      "Redacted evidence",
+      "CLI-first workflow"
+    ],
+    "websiteURL": "https://github.com/eidos-agi/linearplus",
+    "privacyPolicyURL": "https://github.com/eidos-agi/linearplus",
+    "termsOfServiceURL": "https://github.com/eidos-agi/linearplus",
+    "defaultPrompt": [
+      "Use LinearPlus to create or reuse a Linear initiative and attach this project.",
+      "Use LinearPlus to bootstrap the Greenmark AI Search Visibility initiative.",
+      "Use LinearPlus to inspect whether a Linear initiative exists by name."
+    ],
+    "brandColor": "#5E6AD2"
+  }
+}

@@ -1,0 +1,11 @@
+[agentic_first]
+code_justification = "thin CLI/plugin shim"
+agentic_capability = "LinearPlus gives Eidos and Codex a token-safe CLI bridge for Linear initiative creation and project attachment when connector tools are missing or unreliable."
+non_code_paths_considered = ["instruction", "routing", "proof", "existing Linear connector"]
+
+[shipment]
+style = "eidos-plugin"
+evidence_dir = ".eidos/ship/shipments"
+
+[artifact_policy]
+clean_after_build = true

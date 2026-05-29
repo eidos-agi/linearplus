@@ -1,0 +1,15 @@
+{
+  "kind": {
+    "type": "tool",
+    "signals": [
+      "single_capability",
+      "cli_first",
+      "api_adapter"
+    ]
+  },
+  "audit": {
+    "audited_by": "codex",
+    "audit_version": "0.1.0",
+    "grade": "PENDING"
+  }
+}

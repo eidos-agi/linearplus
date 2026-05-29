@@ -1,0 +1,13 @@
+slug: linearplus
+alias: linearplus
+version: 0.1.0
+description: Use LinearPlus for Linear GraphQL initiative creation and project attachment workflows missing from connector surfaces.
+kind: tool
+entrypoint: playbook.md
+tags:
+  - eidos
+  - tool
+  - linear
+  - graphql
+  - initiatives
+  - cli

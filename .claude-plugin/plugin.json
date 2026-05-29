@@ -1,0 +1,27 @@
+{
+  "name": "linearplus",
+  "version": "0.1.0",
+  "description": "Use the LinearPlus CLI for Linear GraphQL initiative workflows missing from connector surfaces.",
+  "author": {
+    "name": "Eidos AGI",
+    "email": "daniel@eidosagi.com",
+    "url": "https://github.com/eidos-agi"
+  },
+  "homepage": "https://github.com/eidos-agi/linearplus",
+  "repository": "https://github.com/eidos-agi/linearplus",
+  "license": "MIT",
+  "category": "agent-tools",
+  "keywords": [
+    "linear",
+    "graphql",
+    "initiatives",
+    "projects",
+    "cli",
+    "eidos-agi"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "LinearPlus",
+    "shortDescription": "Create and attach Linear initiatives through a CLI-first API bridge."
+  }
+}
