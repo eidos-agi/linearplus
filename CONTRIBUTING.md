@@ -9,6 +9,9 @@ that are missing or unreliable in higher-level connector surfaces.
 python -m unittest discover -s tests -v
 bin/linearplus --help
 bin/linearplus greenmark-bootstrap --dry-run
+bin/linearplus greenmark-analytics --dry-run
+bin/linearplus greenmark-dump --dry-run
+bin/linearplus account-dump --dry-run
 python verify.py
 ```
 
