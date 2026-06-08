@@ -24,8 +24,12 @@ def verify(work_dir: Path | str | None = None, draft_dir: Path | str | None = No
     checks = [
         [PYTHON, "-m", "unittest", "discover", "-s", "tests", "-v"],
         ["bin/linearplus", "--help"],
+        ["bin/linearplus", "auth-check", "--dry-run"],
         ["bin/linearplus", "initiative-ensure", "--help"],
         ["bin/linearplus", "greenmark-bootstrap", "--dry-run"],
+        ["bin/linearplus", "greenmark-analytics", "--dry-run"],
+        ["bin/linearplus", "greenmark-dump", "--dry-run"],
+        ["bin/linearplus", "account-dump", "--dry-run"],
     ]
     failures = []
     for command in checks:
@@ -44,6 +48,8 @@ def verify(work_dir: Path | str | None = None, draft_dir: Path | str | None = No
         "tests/test_linearplus.py",
         "bin/linearplus",
         "README.md",
+        "LINEARDB.md",
+        "LINEAR_DATA_EXPORT.md",
         "LICENSE",
     ]
     for rel in required:

@@ -1,7 +1,7 @@
 {
   "name": "linearplus",
   "version": "0.1.0",
-  "description": "Use the LinearPlus CLI for Linear GraphQL initiative workflows missing from connector surfaces.",
+  "description": "Use LinearPlus and LinearDB for OAuth-backed Linear connectivity, initiative workflows, Greenmark task analytics, and account-wide SQLite exports with snapshots, comments, attachments, history, and state spans.",
   "author": {
     "name": "Eidos AGI",
     "email": "daniel@eidosagi.com",
@@ -13,8 +13,12 @@
   "category": "agent-tools",
   "keywords": [
     "linear",
+    "lineardb",
+    "oauth",
     "graphql",
     "initiatives",
+    "analytics",
+    "sqlite",
     "projects",
     "cli",
     "eidos-agi"
@@ -22,6 +26,6 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "LinearPlus",
-    "shortDescription": "Create and attach Linear initiatives through a CLI-first API bridge."
+    "shortDescription": "Create initiatives and sync LinearDB task data through an OAuth-ready CLI bridge."
   }
 }

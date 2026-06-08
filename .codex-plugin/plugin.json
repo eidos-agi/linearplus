@@ -1,7 +1,7 @@
 {
   "name": "linearplus",
   "version": "0.1.0",
-  "description": "Use the LinearPlus CLI for Linear GraphQL initiative workflows missing from connector surfaces.",
+  "description": "Use LinearPlus and LinearDB for OAuth-backed Linear connectivity, initiative workflows, Greenmark task analytics, and account-wide SQLite exports with snapshots, comments, attachments, history, and state spans.",
   "author": {
     "name": "Eidos AGI",
     "email": "daniel@eidosagi.com",
@@ -12,8 +12,12 @@
   "license": "MIT",
   "keywords": [
     "linear",
+    "lineardb",
+    "oauth",
     "graphql",
     "initiatives",
+    "analytics",
+    "sqlite",
     "projects",
     "cli",
     "eidos-agi"
@@ -21,14 +25,22 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "LinearPlus",
-    "shortDescription": "Create and attach Linear initiatives through a CLI-first API bridge.",
-    "longDescription": "LinearPlus routes Codex to a small token-safe CLI for Linear GraphQL operations that are missing or unreliable in connector surfaces. The first workflow creates or reuses initiatives, attaches existing projects, and emits redacted evidence for Eidos loops.",
+    "shortDescription": "Create initiatives and dump Linear task data through a CLI-first API bridge.",
+    "longDescription": "LinearPlus routes Codex to a small token-safe CLI for Linear GraphQL operations that are missing or unreliable in connector surfaces. It uses LinearDB for OAuth-backed connectivity, workspace/team validation, and local SQLite sync; creates or reuses initiatives; attaches existing projects; dumps Greenmark GMW task data; exports all accessible task data to SQLite with issue snapshots, comments, attachments, issue history, and state spans; summarizes analytics; and emits redacted evidence for Eidos loops.",
     "developerName": "Eidos AGI",
     "category": "Developer Tools",
     "capabilities": [
       "Linear GraphQL",
+      "LinearDB local sync",
+      "OAuth client credentials",
+      "Workspace/team auth check",
       "Initiative creation",
       "Project attachment",
+      "Greenmark task data dump",
+      "Greenmark task analytics",
+      "Account-wide SQLite export",
+      "Issue comments and attachments",
+      "Issue history and state spans",
       "Duplicate avoidance",
       "Redacted evidence",
       "CLI-first workflow"
@@ -38,7 +50,11 @@
     "termsOfServiceURL": "https://github.com/eidos-agi/linearplus",
     "defaultPrompt": [
       "Use LinearPlus to create or reuse a Linear initiative and attach this project.",
+      "Use LinearPlus to verify LinearDB can see the Greenmark GMW team.",
       "Use LinearPlus to bootstrap the Greenmark AI Search Visibility initiative.",
+      "Use LinearPlus to dump Greenmark GMW task data onto this machine.",
+      "Use LinearPlus to export all accessible Linear team task data into SQLite.",
+      "Use LinearPlus to summarize analytics across Greenmark GMW tasks.",
       "Use LinearPlus to inspect whether a Linear initiative exists by name."
     ],
     "brandColor": "#5E6AD2"
