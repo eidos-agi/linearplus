@@ -15,29 +15,18 @@ The first workflow is initiative management:
 
 ## Credentials
 
-Preferred Greenmark/recurring setup is OAuth client credentials for the
-LinearDB layer:
+Preferred Greenmark/recurring setup is the LinearDB OAuth install flow:
 
 ```bash
-export LINEARDB_GREENMARK_OAUTH_CLIENT_ID="..."
-export LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET="..."
-export LINEARDB_GREENMARK_OAUTH_SCOPE="read"
+export LINEARDB_GREENMARK_OAUTH_CLIENT_ID=<client-id>
+export LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET=<client-secret>
+
+lineardb --account greenmark connect
 ```
 
-Personal API key fallback:
-
-```bash
-export LINEARDB_GREENMARK_LINEAR_API_KEY="..."
-```
-
-or:
-
-```bash
-export LINEARPLUS_LINEAR_API_KEY="..."
-```
-
-LinearPlus/LinearDB never prompts for tokens, prints tokens, or writes tokens to
-repo files.
+The first `greenmark` profile is expected to connect Daniel's
+`daniel@eidosagi.com` Linear login and validate access to team `GMW`.
+LinearPlus/LinearDB never prints OAuth tokens or writes them to repo files.
 
 Verify workspace/team access before a Greenmark run:
 
@@ -54,28 +43,34 @@ python -m linearplus.cli --account greenmark auth-check --team-key GMW
 An explicit account only uses `LINEARDB_GREENMARK_*` credentials. It will not
 fall back to ambient `LINEARPLUS_*` or `LINEAR_*` credentials.
 
-## Pairing For A Linear API Key
+## Pairing For LinearDB OAuth
 
-LinearPlus uses a human pairing step for credentials. It does not manage tokens.
+LinearPlus uses LinearDB for account credentials. It does not create the Linear
+OAuth app, but it can consume the local LinearDB token store after connection.
 
 1. Run the intended command with `--dry-run` first when available.
-2. Create or select a Linear personal API key in
-   `Settings > Account > Security & Access`.
-3. If member keys are unavailable, ask a Linear admin to check
-   `Settings > Administration > API > Member API keys`.
-4. Put the key in a local shell or vault-backed environment variable:
+2. Create or select the LinearDB OAuth app and ensure this callback URL is
+   configured:
 
-   ```bash
-   export LINEARPLUS_LINEAR_API_KEY="..."
+   ```text
+   http://localhost:8721/oauth/callback
    ```
 
-5. Verify only presence, not value:
+3. Put the OAuth app client id/secret in a local shell or vault-backed
+   environment variable:
 
    ```bash
-   test -n "$LINEARPLUS_LINEAR_API_KEY" || test -n "$LINEAR_API_KEY"
+   export LINEARDB_GREENMARK_OAUTH_CLIENT_ID=<client-id>
+   export LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET=<client-secret>
    ```
 
-6. Run the narrow approved live command and capture redacted evidence.
+4. Connect with the intended Linear login:
+
+   ```bash
+   lineardb --account greenmark connect
+   ```
+
+5. Run the narrow approved live command and capture redacted evidence.
 
 Linear references:
 

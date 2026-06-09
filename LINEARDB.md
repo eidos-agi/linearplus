@@ -19,8 +19,8 @@ boundary is wired through the plugin.
 LinearDB owns:
 
 - Linear authentication and workspace identity checks.
-- OAuth client-credentials exchange for app/service-account access.
-- Personal API key fallback when OAuth credentials are absent.
+- OAuth installed-user connection, local token storage, and refresh-token
+  rotation.
 - Visible team inventory and required-team validation.
 - Local SQLite schema for issues, snapshots, comments, attachments, issue
   history, and state spans.
@@ -40,15 +40,15 @@ Personal API keys drift with the currently active Linear login and browser
 profile. That already produced a Boone Voyage export when the intended target
 was Greenmark `GMW`.
 
-For recurring data products, LinearDB should prefer Linear OAuth
-`client_credentials`:
+For recurring data products, LinearDB uses Linear OAuth installed-user
+authorization:
 
 - Scope: `read`.
-- Actor: app/service-account.
-- Token lifetime: 30 days.
-- Team access: configured in Linear app details.
-- Refresh behavior: request a new client-credentials token when Linear returns
-  `401`.
+- Actor: `user`.
+- Token lifetime: 24-hour access token plus refresh token.
+- Refresh behavior: LinearDB refreshes and rotates stored refresh tokens.
+- First Greenmark account: `greenmark`, connected as `daniel@eidosagi.com`,
+  validated against team `GMW`.
 
 This moves connectivity from "whatever user login/profile is active" to a
 workspace app identity that can be validated before any dump runs.
@@ -66,35 +66,24 @@ LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET
 LINEARDB_GREENMARK_OAUTH_SCOPE=read
 ```
 
-Account-scoped personal API key fallback:
+Optional account policy overrides:
 
 ```bash
-LINEARDB_GREENMARK_LINEAR_API_KEY
+LINEARDB_GREENMARK_OAUTH_REDIRECT_URI=http://localhost:8721/oauth/callback
+LINEARDB_GREENMARK_EXPECTED_EMAIL=daniel@eidosagi.com
+LINEARDB_GREENMARK_TEAM_KEY=GMW
+LINEARDB_TOKEN_DB=~/.lineardb/credentials.sqlite
 ```
 
-Ambient/legacy OAuth app credentials:
-
-```bash
-LINEARPLUS_OAUTH_CLIENT_ID
-LINEARPLUS_OAUTH_CLIENT_SECRET
-LINEARPLUS_OAUTH_SCOPE=read
-```
-
-Ambient/legacy personal API key fallback:
-
-```bash
-LINEAR_API_KEY
-LINEARPLUS_LINEAR_API_KEY
-```
-
-LinearDB must never print, persist, or commit API keys, OAuth client secrets, or
-access tokens. Store long-lived credentials in local Keychain or another
-Daniel-owned secret store, then inject them into the process environment.
+LinearDB must never print, commit, or write OAuth client secrets or access
+tokens to repo files. OAuth tokens are stored in the local credential database;
+OAuth client secrets should come from a local shell, Keychain, or another
+Daniel-owned secret store.
 
 When `--account greenmark` is supplied, LinearDB only uses
-`LINEARDB_GREENMARK_*` credentials. It does not fall back to ambient
-`LINEARPLUS_*` or `LINEAR_*` credentials, because that would reintroduce the
-wrong-workspace failure mode.
+the stored OAuth profile and `LINEARDB_GREENMARK_*` app settings. It does not
+fall back to ambient `LINEARPLUS_*`, `LINEAR_*`, or personal API-key
+credentials, because that would reintroduce the wrong-workspace failure mode.
 
 ## Validation
 
@@ -102,6 +91,7 @@ Run this before any Greenmark dump:
 
 ```bash
 cd /Users/dshanklinbv/repos-eidos-agi/lineardb
+bin/lineardb --account greenmark connect
 bin/lineardb --account greenmark auth-check --team-key GMW
 ```
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+LINEARDB_ROOT="$(cd "$ROOT/../lineardb" 2>/dev/null && pwd || true)"
+if [[ -n "$LINEARDB_ROOT" && -d "$LINEARDB_ROOT/lineardb" ]]; then
+  PYTHONPATH="$ROOT:$LINEARDB_ROOT${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m linearplus.cli "$@"
+fi
 PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m linearplus.cli "$@"
