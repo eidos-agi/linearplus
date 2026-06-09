@@ -17,6 +17,7 @@ Useful entrypoints:
 
 ```bash
 linearplus --help
+lineardb --account greenmark connect
 linearplus --account greenmark auth-check --team-key GMW
 linearplus initiative-get --name "Greenmark AI Search Visibility"
 linearplus initiative-ensure --name "Greenmark AI Search Visibility" --status Planned
@@ -52,59 +53,57 @@ linearplus --account greenmark auth-check --team-key GMW
 
 ## Credential Boundary
 
-- Preferred recurring setup is account-scoped OAuth client credentials:
+- Preferred recurring setup is an account-scoped LinearDB OAuth install:
   `LINEARDB_GREENMARK_OAUTH_CLIENT_ID`,
   `LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET`, and optional
   `LINEARDB_GREENMARK_OAUTH_SCOPE=read`.
-- Personal API key fallback uses `LINEAR_API_KEY` or
-  `LINEARPLUS_LINEAR_API_KEY`; for Greenmark prefer
-  `LINEARDB_GREENMARK_LINEAR_API_KEY` if a personal key must be used.
+- The first Greenmark profile connects Daniel's `daniel@eidosagi.com` Linear
+  login and must validate team key `GMW`.
 - Explicit accounts fail closed: `--account greenmark` must not fall back to
   ambient `LINEARPLUS_*` or `LINEAR_*` credentials.
 - It must not print, store, or ask the model to reveal Linear API tokens,
   OAuth client secrets, or access tokens.
 - If credentials are missing, report the missing-token blocker and preserve the
   dry-run evidence.
-- Prefer OAuth client credentials for Greenmark/LinearDB. Use browser pairing
-  only to help Daniel create or configure the Linear OAuth app; do not scrape or
-  echo secrets.
+- Use browser pairing only to help Daniel create or configure the Linear OAuth
+  app; do not scrape or echo secrets.
 
 ## Pairing Procedure
 
-Use this procedure when LinearPlus needs a Linear API key.
+Use this procedure when LinearPlus/LinearDB needs a Linear OAuth connection.
 
 1. Confirm the task needs live Linear API access.
    Run the dry-run command first and explain what the live command would change.
 
-2. Ask Daniel to create or choose a Linear personal API key.
-   Linear's current docs place personal API keys under:
-   `Settings > Account > Security & Access`.
+2. Ask Daniel to create or choose the LinearDB OAuth app and make sure this
+   callback URL is configured:
 
-3. If Daniel is not an admin and cannot create a key, tell him the workspace
-   may restrict member API keys under:
-   `Settings > Administration > API > Member API keys`.
+   ```text
+   http://localhost:8721/oauth/callback
+   ```
 
-4. Ask Daniel to provide the key only through an approved local secret path or
-   shell environment. Do not ask him to paste the token into chat.
+3. Ask Daniel to provide the OAuth app client id/secret only through an approved
+   local secret path or shell environment. Do not ask him to paste secrets into
+   chat.
 
-5. Verify presence without revealing the value:
+4. Verify presence without revealing the values:
 
    ```bash
-   test -n "$LINEARPLUS_LINEAR_API_KEY" || test -n "$LINEAR_API_KEY"
+   test -n "$LINEARDB_GREENMARK_OAUTH_CLIENT_ID"
+   test -n "$LINEARDB_GREENMARK_OAUTH_CLIENT_SECRET"
+   ```
+
+5. Run the local OAuth install:
+
+   ```bash
+   lineardb --account greenmark connect
    ```
 
 6. Run one read or dry-run-safe check first when possible, then perform the
-   narrow live mutation that Daniel requested.
+   narrow live operation that Daniel requested.
 
 7. Capture evidence with the command, redacted output, created or reused Linear
    ids/urls, and any permission blocker. Never record the token.
-
-Recommended temporary shell form:
-
-```bash
-export LINEARPLUS_LINEAR_API_KEY="..."
-linearplus initiative-get --name "Greenmark AI Search Visibility"
-```
 
 Recommended persistent handling is a local vault or shell profile entry owned
 by Daniel, not plugin-managed storage.
@@ -127,8 +126,7 @@ Start with:
 linearplus greenmark-bootstrap --dry-run
 ```
 
-Then run live only when a valid Linear API key is available in environment or
-approved vault-backed shell context.
+Then run live only when the `greenmark` LinearDB OAuth profile is connected.
 
 ## Greenmark Analytics
 
@@ -143,9 +141,9 @@ Start with:
 linearplus greenmark-analytics --dry-run
 ```
 
-Then run live only when a valid Linear API key is available in environment or
-approved vault-backed shell context. The command is read-only but still needs a
-Linear API key for live issue data.
+Then run live only when the `greenmark` LinearDB OAuth profile is connected.
+The command is read-only but still needs a valid OAuth installation for live
+issue data.
 
 ## Account-Wide SQLite Dump
 
@@ -169,9 +167,9 @@ Start with:
 linearplus account-dump --dry-run
 ```
 
-Then run live only when a valid Linear API key is available in environment or
-approved vault-backed shell context. The command is read-only but still needs a
-Linear API key for live issue data.
+Then run live only when the `greenmark` LinearDB OAuth profile is connected.
+The command is read-only but still needs a valid OAuth installation for live
+issue data.
 
 Use `--skip-related` only when Daniel explicitly wants a fast current-state
 refresh without comments, attachments, issue history, and state spans.
@@ -193,6 +191,6 @@ Start with:
 linearplus greenmark-dump --dry-run
 ```
 
-Then run live only when a valid Linear API key is available in environment or
-approved vault-backed shell context. The command is read-only but still needs a
-Linear API key for live issue data.
+Then run live only when the `greenmark` LinearDB OAuth profile is connected.
+The command is read-only but still needs a valid OAuth installation for live
+issue data.

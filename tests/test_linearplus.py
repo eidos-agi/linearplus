@@ -225,6 +225,15 @@ class LinearPlusTests(unittest.TestCase):
         written = "".join(call.args[0] for call in stderr.write.call_args_list)
         self.assertIn("missing_token", written)
 
+    def test_build_client_uses_lineardb_token_store_for_explicit_account(self):
+        args = type("Args", (), {"account": "greenmark", "token_env": "LINEAR_API_KEY", "endpoint": "https://example.test/graphql"})()
+        with patch.object(cli_module, "lineardb_get_token", return_value="Bearer lineardb-token") as get_lineardb_token:
+            client = cli_module.build_client(args)
+
+        get_lineardb_token.assert_called_once_with(account="greenmark")
+        self.assertEqual(client.token, "Bearer lineardb-token")
+        self.assertEqual(client.endpoint, "https://example.test/graphql")
+
     def test_query_constants_use_expected_mutations(self):
         self.assertIn("initiativeCreate", INITIATIVE_CREATE)
         self.assertIn("InitiativeCreateInput", INITIATIVE_CREATE)

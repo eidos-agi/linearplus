@@ -25,11 +25,16 @@ from .client import (
 )
 
 try:
+    from lineardb.auth import LinearDBError, MissingCredentialError as LinearDBMissingCredentialError
+    from lineardb.auth import get_token as lineardb_get_token
     from lineardb.graphql import LinearGraphQLClient as LinearDBClient
     from lineardb.mirror import account_mirror_dump as lineardb_account_mirror_dump
     from lineardb.mirror import auth_check as lineardb_auth_check
     from lineardb.schema import write_mirror_sqlite as lineardb_write_mirror_sqlite
 except ImportError:  # pragma: no cover - exercised by fallback behavior in environments without LinearDB.
+    LinearDBError = None
+    LinearDBMissingCredentialError = None
+    lineardb_get_token = None
     LinearDBClient = None
     lineardb_account_mirror_dump = None
     lineardb_auth_check = None
@@ -56,9 +61,15 @@ def main(argv: list[str] | None = None) -> int:
     except MissingTokenError as exc:
         print(json.dumps({"ok": False, "blocked": "missing_token", "message": str(exc)}, indent=2), file=sys.stderr)
         return 3
+    except tuple(error for error in [LinearDBMissingCredentialError] if error is not None) as exc:
+        print(json.dumps({"ok": False, "blocked": "missing_token", "message": str(exc)}, indent=2), file=sys.stderr)
+        return 3
     except LinearGraphQLError as exc:
         print(json.dumps({"ok": False, "blocked": "linear_graphql_error", "errors": exc.errors}, indent=2), file=sys.stderr)
         return 4
+    except tuple(error for error in [LinearDBError] if error is not None) as exc:
+        print(json.dumps({"ok": False, "blocked": "lineardb_error", "message": str(exc)}, indent=2), file=sys.stderr)
+        return 1
     except Exception as exc:
         print(json.dumps({"ok": False, "blocked": "linearplus_error", "message": str(exc)}, indent=2), file=sys.stderr)
         return 1
@@ -69,7 +80,7 @@ def build_parser() -> argparse.ArgumentParser:
         prog="linearplus",
         description="CLI-first Linear GraphQL bridge for initiative workflows.",
     )
-    parser.add_argument("--token-env", default="LINEAR_API_KEY", help="Environment variable containing the Linear API key.")
+    parser.add_argument("--token-env", default="LINEAR_API_KEY", help=argparse.SUPPRESS)
     parser.add_argument("--endpoint", default="https://api.linear.app/graphql", help="Linear GraphQL endpoint.")
     parser.add_argument("--account", help="LinearDB account profile name, such as greenmark.")
 
@@ -155,6 +166,13 @@ def add_initiative_fields(parser: argparse.ArgumentParser) -> None:
 
 
 def build_client(args: argparse.Namespace) -> LinearPlusClient:
+    if args.account and lineardb_get_token is not None:
+        return LinearPlusClient(token=lineardb_get_token(account=args.account), endpoint=args.endpoint)
+    if args.account:
+        raise MissingTokenError(
+            f"Install LinearDB and run `lineardb --account {args.account} connect` first. "
+            "Explicit LinearPlus accounts use LinearDB OAuth only."
+        )
     return LinearPlusClient(token=get_token(args.token_env, account=args.account), endpoint=args.endpoint)
 
 
