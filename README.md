@@ -2,6 +2,23 @@
 
 LinearPlus is a small CLI-first bridge for Linear API capabilities that are not reliably exposed through the current connector surface.
 
+## Product position — a shim, by design
+
+LinearPlus exists to be **slightly better than the official Linear MCP connector
+where it falls short** — nothing more. It is a shim until Linear's own surface
+catches up (Daniel, 2026-06-10). That means:
+
+- **Only build the delta.** Issues/comments/projects CRUD work through the
+  official connector; LinearPlus must not duplicate them. Current delta:
+  initiative writes (create/ensure/attach — the connector is read-only for
+  initiatives), workspace dumps, local SQLite analytics.
+- **Every verb carries a sunset test**: "does the official connector do this
+  now?" When it does, the verb retires.
+- **No deep roots.** The durable layer is LinearDB (the local mirror +
+  analytics, useful regardless of connector quality); LinearPlus stays thin
+  on top. OAuth app name in Linear: **LPlus** (Linear rejects app names
+  containing the word "Linear").
+
 LinearPlus uses **LinearDB** for connectivity and local Linear data sync. See
 [LINEARDB.md](LINEARDB.md) for the product boundary: OAuth app access, workspace
 identity checks, SQLite schema, retries, and time-series/related-data storage.
