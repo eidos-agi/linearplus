@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "eidos-linear": {
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/eidos-agi/linearplus",
+        "eidos-linear-mcp"
+      ],
+      "tool_timeout_sec": 300
+    }
+  }
+}

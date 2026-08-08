@@ -40,8 +40,12 @@ Personal API keys drift with the currently active Linear login and browser
 profile. That already produced a Boone Voyage export when the intended target
 was Greenmark `GMW`.
 
-For recurring data products, LinearDB uses Linear OAuth installed-user
-authorization:
+For recurring data products, LinearDB uses two OAuth modes:
+
+1. Installed-user authorization for local `lineardb connect`.
+2. Client-credentials for hosted Cerebro and data-daemon service reads.
+
+Installed-user authorization:
 
 - Scope: `read`.
 - Actor: `user`.
@@ -49,6 +53,14 @@ authorization:
 - Refresh behavior: LinearDB refreshes and rotates stored refresh tokens.
 - First Greenmark account: `greenmark`, connected as `daniel@eidosagi.com`,
   validated against team `GMW`.
+
+Hosted client-credentials authorization:
+
+- Current app name: `TaskDB Hosted`.
+- Workspace: `eidos-agi`.
+- Scope: `read`.
+- Validation target: team `GMW`.
+- Hosted viewer identity is the OAuth app, not Daniel's mailbox.
 
 This moves connectivity from "whatever user login/profile is active" to a
 workspace app identity that can be validated before any dump runs.
@@ -73,6 +85,14 @@ LINEARDB_GREENMARK_OAUTH_REDIRECT_URI=http://localhost:8721/oauth/callback
 LINEARDB_GREENMARK_EXPECTED_EMAIL=daniel@eidosagi.com
 LINEARDB_GREENMARK_TEAM_KEY=GMW
 LINEARDB_TOKEN_DB=~/.lineardb/credentials.sqlite
+```
+
+Hosted service aliases for Greenmark/Cerebro:
+
+```bash
+CEREBRO_LINEAR_OAUTH_CLIENT_ID
+CEREBRO_LINEAR_OAUTH_CLIENT_SECRET
+CEREBRO_LINEAR_TEAM_KEY=GMW
 ```
 
 LinearDB must never print, commit, or write OAuth client secrets or access
@@ -104,6 +124,12 @@ bin/linearplus --account greenmark auth-check --team-key GMW
 A Greenmark-ready credential must show `has_required_team: true` for `GMW`.
 If it does not, stop. Do not run `greenmark-dump`, `greenmark-analytics`, or a
 full `account-dump` and call it Greenmark data.
+
+For hosted client-credentials, the expected proof shape is:
+
+- `viewer.organization.urlKey == "eidos-agi"`
+- `viewer.email` ends with `@oauthapp.linear.app`
+- `team_keys` includes `GMW`
 
 ## SQLite Tables
 

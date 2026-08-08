@@ -31,6 +31,10 @@ class FakeClient:
     def __init__(self, responses):
         self.responses = list(responses)
         self.calls = []
+        self.token = "Bearer test"
+        self.endpoint = "https://api.linear.app/graphql"
+        self.max_retries = 0
+        self.retry_sleep_seconds = 0
 
     def execute(self, query, variables=None):
         self.calls.append((query, variables or {}))
@@ -270,8 +274,19 @@ class LinearPlusTests(unittest.TestCase):
                 },
             ]
         )
-        with patch("linearplus.cli.build_client", return_value=fake_client), patch("sys.stdout") as stdout:
-            code = main(["auth-check", "--team-key", "GMW"])
+        def fake_auth_check(client, team_key="GMW", team_page_size=100):
+            return {
+                "viewer": {"id": "viewer-1", "email": "daniel@greenmarkwaste.com"},
+                "teams": [{"id": "team-gmw", "key": "GMW", "name": "Greenmark"}],
+                "team_keys": ["GMW"],
+                "required_team_key": team_key,
+                "has_required_team": True,
+            }
+
+        with patch("linearplus.cli.build_client", return_value=fake_client):
+            with patch.object(cli_module, "lineardb_auth_check", side_effect=fake_auth_check):
+                with patch("sys.stdout") as stdout:
+                    code = main(["auth-check", "--team-key", "GMW"])
 
         output = "".join(call.args[0] for call in stdout.write.call_args_list)
         data = json.loads(output)
@@ -817,11 +832,30 @@ class LinearPlusTests(unittest.TestCase):
                 },
             ]
         )
+        dump = {
+            "teams": [{"id": "team-gmw", "key": "GMW", "name": "Greenmark"}],
+            "issues": [
+                {
+                    "id": "issue-1",
+                    "identifier": "GMW-1",
+                    "title": "Account dump",
+                    "team": {"id": "team-gmw", "key": "GMW", "name": "Greenmark"},
+                    "state": {"name": "Todo", "type": "unstarted"},
+                    "labels": {"nodes": []},
+                }
+            ],
+            "related": {"comments": [], "attachments": [], "history": [], "state_spans": []},
+            "analytics": {"totals": {"issues": 1}},
+        }
         with tempfile.TemporaryDirectory() as temp_dir:
             db_path = Path(temp_dir) / "linear.sqlite"
-            with patch("linearplus.cli.build_client", return_value=fake_client), patch("sys.stdout") as stdout:
-                code = main(["account-dump", "--skip-related", "--sqlite", str(db_path)])
+            with patch("linearplus.cli.build_client", return_value=fake_client):
+                with patch.object(cli_module, "lineardb_account_mirror_dump", return_value=dump):
+                    with patch.object(cli_module, "lineardb_write_mirror_sqlite", side_effect=cli_module.lineardb_write_mirror_sqlite) as writer:
+                        with patch("sys.stdout") as stdout:
+                            code = main(["account-dump", "--skip-related", "--sqlite", str(db_path)])
 
+            writer.assert_called_once()
             self.assertEqual(code, 0)
             with sqlite3.connect(db_path) as connection:
                 issue_count = connection.execute("select count(*) from issues").fetchone()[0]

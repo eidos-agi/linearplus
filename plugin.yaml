@@ -1,7 +1,7 @@
 slug: linearplus
 alias: linearplus
 version: 0.1.0
-description: Use LinearPlus and LinearDB for OAuth-backed Linear connectivity, initiative workflows, Greenmark task analytics, and account-wide SQLite exports with snapshots, comments, attachments, history, and state spans.
+description: Eidos Linear MCP (eidos-linear) plus LinearPlus CLI — OAuth-backed connectivity, initiative workflows, proof gates, mirror status, Greenmark analytics, and SQLite exports.
 kind: tool
 entrypoint: playbook.md
 tags:
